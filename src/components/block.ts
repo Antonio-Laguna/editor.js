@@ -26,7 +26,9 @@ import _ from './utils';
 import MoveUpTune from './block-tunes/block-tune-move-up';
 import DeleteTune from './block-tunes/block-tune-delete';
 import MoveDownTune from './block-tunes/block-tune-move-down';
+import AlignLeftTune from './block-tunes/block-tune-align-left';
 import SelectionUtils from './selection';
+import {Alignment} from '../../types/block-tunes';
 
 /**
  * @classdesc Abstract Block class that contains Block information, Tool name and Tool class instance
@@ -50,7 +52,38 @@ export default class Block {
       focused: 'ce-block--focused',
       selected: 'ce-block--selected',
       dropTarget: 'ce-block--drop-target',
+      wrapperLeft: 'ce-block--left',
+      wrapperRight: 'ce-block--right',
+      wrapperCenter: 'ce-block--center',
+      wrapperJustify: 'ce-block--justify',
     };
+  }
+
+  /**
+   * Transforms block's alignment into it's CSS class counterpart
+   *
+   * @param {Alignment} alignment - Alignment to be transformed to a CSS class
+   * @returns {string}
+   */
+  private static getAlignmentCSS(alignment): string {
+    let cssClass = Block.CSS.wrapperLeft;
+
+    switch (alignment) {
+      case Alignment.Center:
+        cssClass = Block.CSS.wrapperCenter;
+        break;
+      case Alignment.Justify:
+        cssClass = Block.CSS.wrapperJustify;
+        break;
+      case Alignment.Right:
+        cssClass = Block.CSS.wrapperRight;
+        break;
+      case Alignment.Left:
+        cssClass = Block.CSS.wrapperLeft;
+        break;
+    }
+
+    return cssClass;
   }
 
   /**
@@ -264,6 +297,17 @@ export default class Block {
     this.holder.classList.toggle(Block.CSS.wrapperStretched, state);
   }
 
+  set alignment(alignment: Alignment) {
+    this.holder.classList.remove.apply(this.holder.classList, [
+      Block.CSS.wrapperCenter,
+      Block.CSS.wrapperJustify,
+      Block.CSS.wrapperLeft,
+      Block.CSS.wrapperRight,
+    ]);
+
+    this.holder.classList.add(Block.getAlignmentCSS(alignment));
+  }
+
   /**
    * Block Tool`s name
    */
@@ -420,7 +464,7 @@ export default class Block {
    * @return {BlockTune[]}
    */
   public makeTunes(): BlockTune[] {
-    const tunesList = [MoveUpTune, DeleteTune, MoveDownTune];
+    const tunesList = [AlignLeftTune, MoveUpTune, DeleteTune, MoveDownTune];
 
     // Pluck tunes list and return tune instances with passed Editor API and settings
     return tunesList.map( (tune: BlockTuneConstructable) => {

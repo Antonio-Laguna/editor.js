@@ -1,4 +1,5 @@
 import {OutputData} from '../data-formats/output-data';
+import {Alignment} from '../block-tunes';
 
 /**
  * Describes methods to manipulate with Editor`s blocks
@@ -65,4 +66,11 @@ export interface Blocks {
    * Insert new Initial Block after current Block
    */
   insertNewBlock(): void;
+
+  /**
+   * Sets the alignment for current Block
+   * @param {number} index - Block to align
+   * @param {Alignment} alignment - Alignment to be set
+   */
+  alignBlock(index: number, alignment: Alignment): void;
 }

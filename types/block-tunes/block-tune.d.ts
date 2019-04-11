@@ -18,3 +18,13 @@ export interface BlockTune {
 export interface BlockTuneConstructable {
   new (config: {api: API, settings?: ToolConfig}): BlockTune;
 }
+
+/**
+ * Describes different alignments available for blocks
+ */
+export enum Alignment {
+  Left = 'left',
+  Right = 'right',
+  Center = 'center',
+  Justify = 'justify',
+}

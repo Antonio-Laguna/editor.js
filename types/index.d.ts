@@ -32,7 +32,7 @@ export {
   FilePasteEvent,
   FilePasteEventDetail,
 } from './tools';
-export {BlockTune, BlockTuneConstructable} from './block-tunes';
+export {BlockTune, BlockTuneConstructable, Alignment} from './block-tunes';
 export {EditorConfig, SanitizerConfig, PasteConfig} from './configs';
 export {OutputData} from './data-formats/output-data';
 

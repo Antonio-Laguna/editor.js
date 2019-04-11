@@ -1,9 +1,8 @@
 import Module from '../../__module';
 
 import {Blocks} from '../../../../types/api';
+import {Alignment} from '../../../../types/block-tunes';
 import {OutputData} from '../../../../types';
-import Block from '../../block';
-import {ModuleConfig} from '../../../types-internal/module-config';
 
 /**
  * @class BlocksAPI
@@ -26,6 +25,7 @@ export default class BlocksAPI extends Module {
       getBlocksCount: () => this.getBlocksCount(),
       stretchBlock: (index: number, status: boolean = true) => this.stretchBlock(index, status),
       insertNewBlock: () => this.insertNewBlock(),
+      alignBlock: (index: number, alignment: Alignment) => this.alignBlock(index, alignment),
     };
   }
 
@@ -146,5 +146,15 @@ export default class BlocksAPI extends Module {
   public insertNewBlock() {
     const newBlock = this.Editor.BlockManager.insert();
     this.Editor.Caret.setToBlock(newBlock);
+  }
+
+  private alignBlock(index: number, alignment: Alignment) {
+    const block = this.Editor.BlockManager.getBlockByIndex(index);
+
+    if (!block) {
+      return;
+    }
+
+    block.alignment = alignment;
   }
 }
