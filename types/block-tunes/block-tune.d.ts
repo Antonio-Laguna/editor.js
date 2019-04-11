@@ -1,7 +1,7 @@
 import {API, ToolConfig} from '../index';
 
 /**
- * Describes BLockTune blueprint
+ * Describes BlockTune blueprint
  */
 export interface BlockTune {
   /**
